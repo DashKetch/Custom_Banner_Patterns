@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "custom_banner_patterns:item/empty_banner_pattern"
+  }
+}
