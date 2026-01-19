@@ -19,12 +19,17 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Custom_banner_patterns.MODID)
@@ -64,6 +69,9 @@ public class Custom_banner_patterns {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        // Call the create directory function
+        createPatternDirectory();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -76,14 +84,14 @@ public class Custom_banner_patterns {
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    // use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    // use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
@@ -91,6 +99,18 @@ public class Custom_banner_patterns {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+    }
+    
+    // Create directory for banner patterns
+    private void createPatternDirectory() {
+        Path patternPath = FMLPaths.CONFIGDIR.get().resolve("custom_patterns");
+        try {
+            if (!Files.exists(patternPath)) {
+                Files.createDirectories(patternPath);
+            }
+        } catch (IOException e) {
+            LOGGER.error("Failed to create pattern directory", e);
         }
     }
 }
