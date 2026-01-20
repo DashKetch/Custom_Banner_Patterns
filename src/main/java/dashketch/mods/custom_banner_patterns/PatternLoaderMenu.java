@@ -9,29 +9,16 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class PatternLoaderMenu extends AbstractContainerMenu {
-    // Client-side constructor
-    private final BlockPos pos; // Store the position
+    private final BlockPos pos;
 
-    // Client-side constructor (FriendlyByteBuf carries the extra data)
-    public PatternLoaderMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, extraData.readBlockPos());
-    }
+    public PatternLoaderMenu(int id, Inventory inv, FriendlyByteBuf data) { this(id, inv, data.readBlockPos()); }
 
-    // Server-side constructor
-    public PatternLoaderMenu(int containerId, Inventory inv, BlockPos pos) {
-        super(GUI_HUD_Register.PATTERN_LOADER_MENU.get(), containerId);
+    public PatternLoaderMenu(int id, Inventory inv, BlockPos pos) {
+        super(ItemsBlocksRegister.PATTERN_LOADER_MENU.get(), id);
         this.pos = pos;
     }
 
-    public BlockPos getPos() { return this.pos; }
-
-    @Override
-    public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean stillValid(@NotNull Player player) {
-        return true;
-    }
+    public BlockPos getPos() { return pos; }
+    @Override public @NotNull ItemStack quickMoveStack(@NotNull Player p, int i) { return ItemStack.EMPTY; }
+    @Override public boolean stillValid(@NotNull Player p) { return true; }
 }

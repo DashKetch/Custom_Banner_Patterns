@@ -13,16 +13,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class PatternLoaderBlock extends Block {
-    public PatternLoaderBlock(Properties properties) {
-        super(properties);
-    }
+    public PatternLoaderBlock(Properties props) { super(props); }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hitResult) {
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (player instanceof ServerPlayer serverPlayer) {
-            // We use a provider that writes the BlockPos to the buffer so the client can read it
-            serverPlayer.openMenu(new SimpleMenuProvider((id, inv, p) ->
-                    new PatternLoaderMenu(id, inv, pos), Component.literal("Pattern Loader")), pos); // Note the extra 'pos' here
+            serverPlayer.openMenu(new SimpleMenuProvider((id, inv, p) -> new PatternLoaderMenu(id, inv, pos), Component.literal("Pattern Loader")), pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
