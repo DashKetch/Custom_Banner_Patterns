@@ -24,14 +24,20 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
         this.addRenderableWidget(Button.builder(Component.literal("Drop Block"), b -> {
             PacketDistributor.sendToServer(new DropBlockPacket(menu.getPos()));
             this.onClose();
-        }).bounds(centerX - 50, centerY - 10, 100, 20).build());
+        }).bounds(centerX - 50, centerY + 100, 100, 20).build());
     }
 
     @Override
     public void render(@NotNull GuiGraphics g, int mouseX, int mouseY, float partial) {
+        int minX = 40;
+        int minY = 80;
+        int maxX = 430;
+        int maxY = 120;
+
         this.renderBackground(g, mouseX, mouseY, partial);
         super.render(g, mouseX, mouseY, partial);
-        g.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
+        g.fill(minX, minY, maxX, maxY, 0x99FF0000);
+        g.drawCenteredString(this.font, this.title, this.width / 2, 10, 0xFFFFFF);
     }
 
     @Override public @NotNull PatternLoaderMenu getMenu() { return menu; }
