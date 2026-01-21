@@ -21,18 +21,25 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
     protected void init() {
         int centerX = this.width / 2;
         int centerY = this.height / 2;
+
         this.addRenderableWidget(Button.builder(Component.literal("Drop Block"), b -> {
             PacketDistributor.sendToServer(new DropBlockPacket(menu.getPos()));
             this.onClose();
         }).bounds(centerX - 50, centerY + 100, 100, 20).build());
+
+        this.addRenderableWidget(Button.builder(Component.literal("Refresh Patterns"), b -> {
+            PatternManager.loadPatterns();
+            assert this.minecraft != null;
+            this.init(this.minecraft, this.width, this.height);
+        }).bounds(centerX - 50, centerY + 20, 100, 20).build());
     }
 
     @Override
     public void render(@NotNull GuiGraphics g, int mouseX, int mouseY, float partial) {
         //Values for the ascii renderer bounds
         int minX = 40;
-        int minY = 80;
         int maxX = 430;
+        int minY = 40;
         int maxY = 120;
 
         this.renderBackground(g, mouseX, mouseY, partial);

@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -41,5 +42,10 @@ public class Custom_banner_patterns {
         } catch (IOException e) {
             LOGGER.error("Failed to create pattern directory", e);
         }
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        // Scan for files after the directory is confirmed to exist
+        PatternManager.loadPatterns();
     }
 }
