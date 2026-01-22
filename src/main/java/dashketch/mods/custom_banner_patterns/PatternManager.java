@@ -39,7 +39,24 @@ public class PatternManager {
         }
     }
 
+    public static List<String> readPatternContent(String patternName) {
+        try {
+            Path filePath = PATTERN_PATH.resolve(patternName + ".txt");
+            if (Files.exists(filePath)) {
+                return Files.readAllLines(filePath);
+            }
+        } catch (IOException e) {
+            LOGGER.error("Failed to read pattern: {}", patternName, e);
+        }
+        return List.of("Error reading file", "or file not found.");
+    }
+
     public static List<String> getCustomPatterns() {
         return CUSTOM_PATTERNS;
     }
+
+    /*
+    run the code and see how gemini did with the rendering -
+    there were changes to this class and patternloaderscreen.java
+     */
 }
