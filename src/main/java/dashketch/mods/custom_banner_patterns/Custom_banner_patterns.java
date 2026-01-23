@@ -31,6 +31,7 @@ public class Custom_banner_patterns {
     private void registerNetworking(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(MODID);
         registrar.playToServer(DropBlockPacket.TYPE, DropBlockPacket.STREAM_CODEC, DropBlockPacket::handle);
+        registrar.playToServer(PrintPatternPacket.TYPE, PrintPatternPacket.STREAM_CODEC, PrintPatternPacket::handle);
     }
 
     private void createPatternDirectory() {

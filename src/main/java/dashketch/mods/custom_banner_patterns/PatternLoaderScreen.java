@@ -17,7 +17,7 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
     private final PatternLoaderMenu menu;
 
     // Gallery State
-    public int currentPatternIndex = 0;
+    private int currentPatternIndex = 0;
     private List<String> currentFileLines = Collections.emptyList();
 
     // Scrolling State
@@ -53,11 +53,21 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
 
         this.addRenderableWidget(Button.builder(Component.literal("Refresh Patterns"), b -> {
             PatternManager.loadPatterns();
-            this.currentPatternIndex = 0;
+            currentPatternIndex = 0;
             loadCurrentPatternContent();
             assert this.minecraft != null;
             this.init(this.minecraft, this.width, this.height);
         }).bounds(centerX - 50, centerY + 20, 100, 20).build());
+
+        this.addRenderableWidget(Button.builder(Component.literal("Print Pattern"), b -> {
+            List<String> patterns = PatternManager.getCustomPatterns();
+            if (!patterns.isEmpty() && currentPatternIndex < patterns.size()) {
+                String filename = patterns.get(currentPatternIndex);
+                // Send the packet!
+                PacketDistributor.sendToServer(new PrintPatternPacket(filename));
+                this.onClose(); // Optional: Close menu after printing
+            }
+        }).bounds(centerX + 60, centerY + 100, 100, 20).build());
 
         loadCurrentPatternContent();
     }
