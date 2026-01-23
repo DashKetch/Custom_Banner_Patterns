@@ -25,7 +25,7 @@ public class ItemsBlocksRegister {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredBlock<Block> PATTERN_LOADER = BLOCKS.register("pattern_loader",
-            () -> new PatternLoaderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL)));
+            () -> new PatternLoaderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).noOcclusion()));
 
     public static final DeferredItem<BlockItem> PATTERN_LOADER_ITEM = ITEMS.registerSimpleBlockItem("pattern_loader", PATTERN_LOADER);
 

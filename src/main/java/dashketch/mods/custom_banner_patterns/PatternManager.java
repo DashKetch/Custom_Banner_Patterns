@@ -54,9 +54,4 @@ public class PatternManager {
     public static List<String> getCustomPatterns() {
         return CUSTOM_PATTERNS;
     }
-
-    /*
-    run the code and see how gemini did with the rendering -
-    there were changes to this class and patternloaderscreen.java
-     */
 }

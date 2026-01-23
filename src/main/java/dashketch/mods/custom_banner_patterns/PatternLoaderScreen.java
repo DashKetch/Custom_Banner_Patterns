@@ -17,7 +17,7 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
     private final PatternLoaderMenu menu;
 
     // Gallery State
-    private int currentPatternIndex = 0;
+    public int currentPatternIndex = 0;
     private List<String> currentFileLines = Collections.emptyList();
 
     // Scrolling State
@@ -73,7 +73,7 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
         loadCurrentPatternContent();
     }
 
-    private void loadCurrentPatternContent() {
+    public void loadCurrentPatternContent() {
         this.scrollOffset = 0; // Reset scroll
         List<String> patterns = PatternManager.getCustomPatterns();
         if (!patterns.isEmpty() && currentPatternIndex < patterns.size()) {
@@ -83,7 +83,6 @@ public class PatternLoaderScreen extends Screen implements MenuAccess<PatternLoa
         }
     }
 
-    // --- NEW: Calculate Zoom Level ---
     private float calculateScale() {
         if (currentFileLines.isEmpty()) return 1.0f;
 
