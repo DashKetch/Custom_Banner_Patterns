@@ -1,16 +1,12 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "dashketch.mods.custom_banner_patterns.mixin",
   "compatibilityLevel": "JAVA_21",
+  "refmap": "custom_banner_patterns.refmap.json",
   "mixins": [
-  ],
-  "client": [
+    "LoomMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "overwrites": {
-    "requireAnnotations": true
   }
 }

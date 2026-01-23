@@ -17,7 +17,7 @@ import java.nio.file.Path;
 @Mod(Custom_banner_patterns.MODID)
 public class Custom_banner_patterns {
     public static final String MODID = "custom_banner_patterns";
-    public static Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Custom_banner_patterns(IEventBus modEventBus, ModContainer modContainer) {
         ItemsBlocksRegister.BLOCKS.register(modEventBus);
