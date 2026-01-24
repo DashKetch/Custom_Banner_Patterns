@@ -2,7 +2,10 @@ package dashketch.mods.custom_banner_patterns;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -32,7 +35,12 @@ public class ItemsBlocksRegister {
     public static final DeferredHolder<MenuType<?>, MenuType<PatternLoaderMenu>> PATTERN_LOADER_MENU =
             MENUS.register("pattern_loader_menu", () -> IMenuTypeExtension.create(PatternLoaderMenu::new));
 
-    public static final DeferredItem<Item> EMPTY_PATTERN = ITEMS.registerSimpleItem("empty_banner_pattern", new Item.Properties().stacksTo(16));
+    public static final DeferredItem<Item> EMPTY_PATTERN = ITEMS.register("empty_banner_pattern",
+            () -> new BannerPatternItem(
+                    TagKey.create(Registries.BANNER_PATTERN, ResourceLocation.fromNamespaceAndPath("custom_banner_patterns", "pattern_item/dynamic_pattern")),
+                    new Item.Properties().stacksTo(1)
+            )
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CUSTOM_BANNERS = CREATIVE_MODE_TABS.register("custom_banners",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.custom_banner_patterns")).icon(() -> EMPTY_PATTERN.get().getDefaultInstance())

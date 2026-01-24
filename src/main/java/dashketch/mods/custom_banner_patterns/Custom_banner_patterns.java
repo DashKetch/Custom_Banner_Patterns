@@ -1,11 +1,14 @@
 package dashketch.mods.custom_banner_patterns;
 
 import com.mojang.logging.LogUtils;
+import dashketch.mods.custom_banner_patterns.client.DynamicBannerRenderer;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -25,7 +28,20 @@ public class Custom_banner_patterns {
         GUI_HUD_Register.MENUS.register(modEventBus);
         ItemsBlocksRegister.CREATIVE_MODE_TABS.register(modEventBus);
 
+        // Standard listeners
+        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerNetworking);
+
+        // Client-only listener for the renderer
+        modEventBus.addListener(this::registerRenderers);
+
+        createPatternDirectory();
+    }
+
+    // This method tells Minecraft to use your custom renderer for Banners
+    private void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        LOGGER.info("Registering dynamic banner renderer");
+        event.registerBlockEntityRenderer(BlockEntityType.BANNER, DynamicBannerRenderer::new);
     }
 
     private void registerNetworking(final RegisterPayloadHandlersEvent event) {
@@ -35,10 +51,10 @@ public class Custom_banner_patterns {
     }
 
     private void createPatternDirectory() {
-        Path PatternPath = FMLPaths.CONFIGDIR.get().resolve("custom_patterns");
+        Path patternPath = FMLPaths.CONFIGDIR.get().resolve("custom_patterns");
         try {
-            if (!Files.exists(PatternPath)) {
-                Files.createDirectories(PatternPath);
+            if (!Files.exists(patternPath)) {
+                Files.createDirectories(patternPath);
             }
         } catch (IOException e) {
             LOGGER.error("Failed to create pattern directory", e);
@@ -46,7 +62,6 @@ public class Custom_banner_patterns {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Scan for files after the directory is confirmed to exist
         PatternManager.loadPatterns();
     }
 }

@@ -1,5 +1,6 @@
 {
   "item.custom_banner_patterns.empty_banner_pattern": "Empty Banner Pattern",
   "itemGroup.custom_banner_patterns": "Custom Banner Patterns",
-  "block.custom_banner_patterns.pattern_loader": "Pattern Loader"
+  "block.custom_banner_patterns.pattern_loader": "Pattern Loader",
+  "block.minecraft.banner.custom_banner_patterns.dynamic_pattern": "Dynamic Text Pattern"
 }
